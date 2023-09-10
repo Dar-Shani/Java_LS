@@ -31,7 +31,7 @@ public class Model {
             String text;
             while((text = readerCSV.readLine()) != null) {
                 list = text.split(",");
-                toyList.add(new Toy(list[1], Integer.parseInt(list[2]))); 
+                toyList.add(new Toy(list[0], list[1], Integer.parseInt(list[2]))); 
             }
         } catch(IOException e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class Model {
         try(FileWriter createCSV = new FileWriter(file, true)) { 
             for(int a = number; a < toyList.size(); a++) {
                 Toy toy = toyList.get(a);
-                createCSV.append(Integer.toString(toy.getId()));
+                createCSV.append(toy.getId());
                 createCSV.append(",");
                 createCSV.append(toy.getName());
                 createCSV.append(",");
@@ -102,7 +102,7 @@ public class Model {
 
     private void savePrize(Toy toy) {
         try(FileWriter createCSV = new FileWriter("Prize.csv", true)) { 
-            createCSV.append(Integer.toString(toy.getId()));
+            createCSV.append(toy.getId());
             createCSV.append(",");
             createCSV.append(toy.getName());
             createCSV.append(",");
