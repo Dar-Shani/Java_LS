@@ -45,10 +45,9 @@ public class Lottery {
             if ("4".equals(command) && Toy.count > 0) {
                 viev.clear();
                 viev.content("> лотерея");
-                model.getToy();
-                viev.targetInfo();
-                command = scanner.nextLine();
-                model.lottery(Integer.parseInt(command));
+                Toy.count--;
+                
+                model.lottery();
             }
 
             if("exit".equals(command)) {

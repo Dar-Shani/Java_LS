@@ -6,14 +6,13 @@ public class Toy {
     private String name;
     static int count;
     private int chanceToWin;
-    static int totalWeight;
+    
 
     Toy (String name, int chanceToWin) {
         this.id = UUID.randomUUID();
         this.name = name;
         count ++;
         this.chanceToWin = chanceToWin;
-        totalWeight += chanceToWin;
     }
 
     Toy (String id,String name, int chanceToWin ) {
@@ -21,7 +20,6 @@ public class Toy {
         this.name = name;
         count ++;
         this.chanceToWin = chanceToWin;
-        totalWeight += chanceToWin;
     }
 
     public String getId() {

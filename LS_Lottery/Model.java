@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 import java.io.File;
 
 
@@ -66,8 +65,8 @@ public class Model {
     }
 
     public void getToy() {
-        for(Toy toy: toyList) {
-            System.out.println(toy);
+        for(int a = 0; a < toyList.size(); a++) {
+            System.out.println("№ " + a + " " + toyList.get(a));
         }
     }
 
@@ -82,22 +81,28 @@ public class Model {
         saveToy(0, "data.csv");
     }
 
-    public void lottery(int number) {
-        
-        Toy targetToy = toyList.get(number);
-        
-        Random random = new Random();
-
-        int lot = random.nextInt(Toy.totalWeight) + 1;
-        System.out.println(lot);
-        if(targetToy.getChanceToWin() + 5 > lot && targetToy.getChanceToWin() - 5 < lot) {
-            System.out.println("Выйгрышь, приз добавлен в список");
-            savePrize(targetToy);
-            toyList.remove(number);
-            Toy.count--;
-            file.delete();
-            saveToy(0, "data.csv");  
+    public void lottery() {
+        int totalWeight = 0;
+        for(Toy toy: toyList) {
+            totalWeight += toy.getChanceToWin();
         }
+    
+        double randomValue = Math.random() * totalWeight;
+        double toyWeigh = 0.0;
+
+        for(int a = 0; a < toyList.size(); a++) {
+            toyWeigh += toyList.get(a).getChanceToWin();
+            if(randomValue < toyWeigh) {
+                System.out.println("Выпал " + toyList.get(a).getName() + " ID " + toyList.get(a).getId());
+                savePrize(toyList.get(a));
+                toyList.remove(a);
+
+                file.delete();
+                saveToy(0, "data.csv");
+            }
+        }
+
+
     }
 
     private void savePrize(Toy toy) {
