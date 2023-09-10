@@ -22,10 +22,6 @@ public class Viev {
         System.out.println("4 Лотерея");
     }
 
-    public void targetInfo() {
-        System.out.println("Укажите номер игрушки для розыгрыша");
-    }
-
     public void clear() throws InterruptedException, IOException {
         new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
     }
