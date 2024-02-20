@@ -19,49 +19,26 @@ public class Philosopher extends Thread {
         return name;
     }
 
-    /*
-     * private void takeFork() {
-     * synchronized (forkA) {
-     * // System.out.println(name + " взял " + forkA.getName());
-     * synchronized (forkB) {
-     * try {
-     * count++;
-     * System.out.println(name + " взял " + forkA.getName()
-     * + " " + forkB.getName() + " начал трапезничать "
-     * + count + ":3");
-     * sleep(1000);
-     * } catch (InterruptedException e) {
-     * e.printStackTrace();
-     * }
-     * }
-     * }
-     * }
-     */
     private void takeFork2() {
-        if (!Thread.holdsLock(forkA)) {
-            synchronized (forkA) {
-                if (!Thread.holdsLock(forkB)) {
-                    synchronized (forkB) {
-                        try {
-                            sleep(100);
-                            count++;
-                            System.out.println(name + " взял " + forkA.getName()
-                                    + " " + forkB.getName() + " начал трапезничать "
-                                    + count + ":3");
-                        } catch (InterruptedException e) {
+        synchronized (forkA) {
+            if (!Thread.holdsLock(forkB)) {
+                synchronized (forkB) {
+                    try {
+                        sleep(10);
+                        count++;
+                        System.out.println(name + " взял " + forkA.getName()
+                                + " " + forkB.getName() + " начал трапезничать "
+                                + count + ":3");
+                    } catch (InterruptedException e) {
 
-                            e.printStackTrace();
-                        }
+                        e.printStackTrace();
                     }
-                } else {
-                    System.out.println(name + " неуспел взять " + forkB.getName()
-                            + " поэтому вернул " + forkA.getName());
-                    return;
                 }
+            } else {
+                System.out.println(name + " неуспел взять " + forkB.getName()
+                        + " поэтому вернул " + forkA.getName());
+                return;
             }
-        } else {
-            System.out.println(name + " неуспел взять " + forkA.getName());
-            return;
         }
     }
 
